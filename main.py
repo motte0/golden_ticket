@@ -16,7 +16,7 @@ value_cols     = df.columns[9:11]  # J, K번째 컬럼
 # 2-1. 문항 점수 역코딩
 all_items = list(syndrome_cols) + list(happiness_cols) + list(value_cols)
 df[all_items] = df[all_items].apply(pd.to_numeric, errors='coerce')
-df[all_items] = df[all_items].applymap(lambda x: 6 - x)
+df[all_items] = 6 - df[all_items]
 
 # 3. 점수 계산 (각 문항 1~5, 5가 동의 강도 높음)
 weights = [3, 1, 1, 1]
