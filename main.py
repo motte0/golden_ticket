@@ -14,7 +14,12 @@ happiness_cols = df.columns[7:9]   # H, I번째 컬럼
 value_cols     = df.columns[9:11]  # J, K번째 컬럼
 
 # 3. 점수 계산 (각 문항 1~5, 1이 동의 강도 높음)
-df['syndrome_score'] = df[syndrome_cols].mean(axis=1)
+weights = [3, 1, 1, 1]
+df['syndrome_score'] = (
+    df[syndrome_cols].multiply(weights, axis=1)
+    .sum(axis=1)
+    / sum(weights)
+)
 df['hi_score']       = df[happiness_cols].mean(axis=1)
 df['value_score']    = df[value_cols].mean(axis=1)
 
