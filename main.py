@@ -13,7 +13,12 @@ syndrome_cols  = df.columns[3:7]   # D, E, F, G번째 컬럼
 happiness_cols = df.columns[7:9]   # H, I번째 컬럼
 value_cols     = df.columns[9:11]  # J, K번째 컬럼
 
-# 3. 점수 계산 (각 문항 1~5, 1이 동의 강도 높음)
+# 2-1. 문항 점수 역코딩
+all_items = list(syndrome_cols) + list(happiness_cols) + list(value_cols)
+df[all_items] = df[all_items].apply(pd.to_numeric, errors='coerce')
+df[all_items] = df[all_items].applymap(lambda x: 6 - x)
+
+# 3. 점수 계산 (각 문항 1~5, 5가 동의 강도 높음)
 weights = [3, 1, 1, 1]
 df['syndrome_score'] = (
     df[syndrome_cols].multiply(weights, axis=1)
