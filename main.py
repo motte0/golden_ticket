@@ -1,5 +1,5 @@
 import pandas as pd
-from scipy.stats import pearsonr, f_oneway
+from scipy.stats import pearsonr, f_oneway, spearmanr
 
 # 1. 데이터 불러오기
 file_path = './황금티켓 증후군 설문조사(응답).xlsx'
@@ -21,12 +21,20 @@ df['value_score']    = df[value_cols].mean(axis=1)
 # 4. 1) 상관분석: syndrome_score vs hi_score
 clean_hi = df[['syndrome_score', 'hi_score']].dropna()
 r_hi, p_hi = pearsonr(clean_hi['syndrome_score'], clean_hi['hi_score'])
-print(f"황금티켓 증후군 강도 vs 행복·만족도 → r = {r_hi:.3f}, p = {p_hi:.3f}")
+print(f"Pearson | 증후군 강도 vs 행복·만족도 → r = {r_hi:.3f}, p = {p_hi:.3f}")
+
+rho_hi, p_s_hi = spearmanr(clean_hi['syndrome_score'], clean_hi['hi_score'])
+print(f"Spearman | 증후군 강도 vs 행복·만족도 → p = {rho_hi:.3f}, p = {p_s_hi:.3f}")
+
+print()
 
 # 5. 2) 상관분석: syndrome_score vs value_score
 clean_val = df[['syndrome_score', 'value_score']].dropna()
 r_val, p_val = pearsonr(clean_val['syndrome_score'], clean_val['value_score'])
-print(f"황금티켓 증후군 강도 vs 가치관 점수 → r = {r_val:.3f}, p = {p_val:.3f}")
+print(f"Pearson | 증후군 강도 vs 가치관 점수 → r = {r_val:.3f}, p = {p_val:.3f}")
+
+rho_val, p_s_val = spearmanr(clean_val['syndrome_score'], clean_val['value_score'])
+print(f"Spearman | 증후군 강도 vs 가치관 점수 → p = {rho_val:.3f}, p = {p_s_val:.3f}")
 
 # 6. 3-1) 스스로 생각하는 성적대별 syndrome_score 분석
 self_col   = '스스로 생각하는 성적 수준 (상, 중, 하)'
