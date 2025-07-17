@@ -46,7 +46,7 @@ print(df.groupby(self_col)['syndrome_score'].describe())
 f_s, p_s = f_oneway(*groups_self)
 print(f"ANOVA (스스로 성적) → F = {f_s:.3f}, p = {p_s:.3f}")
 
-# 6-2) 실제 성적대별 syndrome_score 분석
+# 7. 3-2) 실제 성적대별 syndrome_score 분석
 actual_col = '본인의 실제 성적 수준 (내신과 모의고사의 평균 성적중 더 높은 쪽으로 선택)'
 groups_act = [grp.dropna() for _, grp in df.groupby(actual_col)['syndrome_score']]
 
